@@ -1,0 +1,10 @@
+{
+  "name": "js-bootstrap4",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "jquery": "3.3.1",
+    "bootstrap": "4.1.0",
+    "popper.js": "1.14.3"
+  }
+}

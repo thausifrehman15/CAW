@@ -1,0 +1,107 @@
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+
+<h1>Todo App</h1>
+<br /><br />
+
+<div class="todo-input">
+  <label>Title:</label>
+  <input type="text" id="title" placeholder="Enter a Title" />
+  <span id="errorTitle"></span>
+  <br />
+  <label>Description:</label>
+  <input
+    type="text"
+    id="description"
+    placeholder="Enter a description for the task"
+  />
+  <span id="errorDescription"></span>
+  <br />
+  <br />
+  <button onclick="addTodoItem()" class="btn btn-primary">Add</button>
+</div>
+
+<div id="listEngage"></div>
+
+<script>
+  var title = document.getElementById('title');
+  var description = document.getElementById('description');
+  var todoList = [];
+
+  function onLoadFunctions() {
+    this.renderList();
+  }
+
+  function renderList() {
+    var listEngage = document.getElementById('listEngage');
+    listEngage.innerHTML = '';
+    for (let i = 0; i < this.todoList.length; i++) {
+      listEngage.innerHTML += `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${
+              this.todoList[i].status == 'completed'
+                ? '<s>' + this.todoList[i].title + '</s>'
+                : this.todoList[i].title
+            }</h5>
+            <h6 class="card-subtitle mb-2 text-muted">${i + 1}</h6>
+            <p class="card-text">${this.todoList[i].description}</p>
+            <a onclick="removeItem(${i})" class="btn btn-primary">Completed</a>
+          </div>
+        </div>
+      `;
+    }
+    document.getElementById('errorTitle').innerHTML = '';
+    document.getElementById('errorDescription').innerHTML = '';
+  }
+
+  function addTodoItem() {
+    if (this.title.value && this.description.value) {
+      this.todoList.push({
+        title: this.title.value,
+        description: this.description.value,
+      });
+      this.renderList();
+      this.title.value = '';
+      this.description.value = '';
+    } else {
+      if (!this.title.value) {
+        let errorTitle = document.getElementById('errorTitle');
+        errorTitle.innerHTML = 'Please Enter a Title';
+        errorTitle.style.color = 'red';
+      }
+      if (!this.description.value) {
+        let errorDescription = document.getElementById('errorDescription');
+        errorDescription.innerHTML = 'Please Enter a Description';
+        errorDescription.style.color = 'red';
+      }
+    }
+  }
+
+  function removeItem(index) {
+    this.todoList[index].status = 'completed';
+    this.renderList();
+  }
+
+  window.onload = onLoadFunctions();
+</script>
